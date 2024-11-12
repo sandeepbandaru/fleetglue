@@ -1,0 +1,26 @@
+services:
+    api:
+        build: ./api
+        command: ["fastapi", "run", "app/main.py", "--port", "8000"]
+        attach: false
+        expose:
+            - "8000"
+        ports:
+            - "8000:8000"
+    rn1:
+        build: ./src
+        attach: false
+        command:
+            [
+                "bash",
+                "-c",
+                "source /opt/ros/foxy/setup.bash && source install/setup.bash && ros2 run rn1 rn1_node",
+            ]
+    rn2:
+        build: ./src # Dockerfile in ./src
+        command:
+            [
+                "bash",
+                "-c",
+                "source /opt/ros/foxy/setup.bash && source install/setup.bash && ros2 run rn2 rn2_node",
+            ]
